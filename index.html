@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inbox F.L.O.W. Kit — NonStephable & Co.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --purple: #9691ED;
+    --pink: #F2ACEB;
+    --blue: #BEE5EE;
+    --cream: #FFF5D4;
+    --lavender: #B89CED;
+    --dark-purple: #3d2e8a;
+  }
+  body { font-family: 'Josefin Sans', sans-serif; background: #0d0b1a; color: #f0eeff; min-height: 100vh; overflow-x: hidden; }
+  .page { max-width: 720px; margin: 0 auto; padding: 0 24px 80px; }
+
+  .hero { text-align: center; padding: 80px 0 60px; position: relative; }
+  .hero::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(150,145,237,0.18) 0%, transparent 70%); pointer-events: none; }
+  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--purple); margin-bottom: 20px; }
+  .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 8vw, 68px); font-weight: 300; line-height: 1.1; color: #fff; margin-bottom: 8px; }
+  .hero-title em { font-style: italic; color: var(--purple); }
+  .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(18px, 3vw, 26px); font-weight: 300; font-style: italic; color: var(--lavender); margin-bottom: 40px; }
+  .hero-divider { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--purple), transparent); margin: 0 auto 40px; }
+
+  .section { padding: 56px 0; border-top: 1px solid rgba(150,145,237,0.15); }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--purple); margin-bottom: 28px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: rgba(150,145,237,0.2); }
+
+  p { font-size: 15px; font-weight: 300; line-height: 1.85; color: rgba(240,238,255,0.8); margin-bottom: 16px; }
+  .lead { font-family: 'Cormorant Garamond', serif; font-size: clamp(22px, 4vw, 34px); font-weight: 400; line-height: 1.3; color: #fff; margin-bottom: 24px; }
+  .lead em { font-style: italic; color: var(--lavender); }
+
+  .whisper-list { padding: 24px 0; display: flex; flex-direction: column; gap: 12px; }
+  .whisper-list li { list-style: none; font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.6); padding-left: 20px; position: relative; line-height: 1.6; }
+  .whisper-list li::before { content: '—'; position: absolute; left: 0; color: var(--purple); opacity: 0.7; }
+
+  .highlight-block { background: rgba(150,145,237,0.08); border-left: 3px solid var(--purple); border-radius: 0 8px 8px 0; padding: 24px 28px; margin: 32px 0; }
+  .highlight-block p { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; font-weight: 400; color: rgba(240,238,255,0.9); line-height: 1.5; margin: 0; }
+
+  .accent-block { background: linear-gradient(135deg, rgba(150,145,237,0.12), rgba(242,172,235,0.08)); border: 1px solid rgba(150,145,237,0.2); border-radius: 12px; padding: 32px; margin: 32px 0; }
+
+  .usp-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 32px 0; }
+  .usp-card { background: rgba(150,145,237,0.06); border: 1px solid rgba(150,145,237,0.18); border-radius: 10px; padding: 24px 18px; text-align: center; }
+  .usp-icon { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; color: var(--purple); opacity: 0.7; margin-bottom: 12px; }
+  .usp-title { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; margin-bottom: 8px; }
+  .usp-desc { font-size: 12px; font-weight: 300; color: rgba(240,238,255,0.5); line-height: 1.6; }
+
+  .flow-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 36px 0; }
+  .flow-step { text-align: center; padding: 24px 12px; position: relative; }
+  .flow-step::after { content: '→'; position: absolute; right: -8px; top: 50%; transform: translateY(-50%); color: rgba(150,145,237,0.4); font-size: 18px; }
+  .flow-step:last-child::after { display: none; }
+  .flow-step-letter { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 700; color: var(--purple); line-height: 1; margin-bottom: 8px; opacity: 0.9; }
+  .flow-step-word { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--lavender); margin-bottom: 8px; }
+  .flow-step-desc { font-size: 11px; font-weight: 300; color: rgba(240,238,255,0.5); line-height: 1.5; }
+
+  .kit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 28px 0; }
+  .kit-item { background: rgba(255,245,212,0.04); border: 1px solid rgba(255,245,212,0.1); border-radius: 10px; padding: 20px; }
+  .kit-item-num { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; color: var(--purple); opacity: 0.5; line-height: 1; margin-bottom: 8px; }
+  .kit-item-title { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; margin-bottom: 6px; }
+  .kit-item-desc { font-size: 12px; font-weight: 300; color: rgba(240,238,255,0.5); line-height: 1.5; }
+
+  .bonus-strip { background: rgba(242,172,235,0.07); border: 1px solid rgba(242,172,235,0.15); border-radius: 10px; padding: 20px 24px; margin: 12px 0; display: flex; align-items: center; gap: 16px; }
+  .bonus-badge { font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--pink); background: rgba(242,172,235,0.15); border: 1px solid rgba(242,172,235,0.2); border-radius: 4px; padding: 4px 8px; white-space: nowrap; }
+  .bonus-text { font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.7); }
+
+  .authority-card { background: rgba(184,156,237,0.07); border: 1px solid rgba(184,156,237,0.18); border-radius: 12px; padding: 36px 32px; margin: 32px 0; position: relative; }
+  .authority-card::before { content: '"'; font-family: 'Cormorant Garamond', serif; font-size: 80px; color: var(--lavender); opacity: 0.15; position: absolute; top: 8px; left: 24px; line-height: 1; }
+  .authority-text { font-family: 'Cormorant Garamond', serif; font-size: 19px; font-style: italic; font-weight: 400; color: rgba(240,238,255,0.85); line-height: 1.65; margin-bottom: 24px; }
+  .authority-byline { display: flex; align-items: center; gap: 14px; }
+  .authority-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--purple), var(--lavender)); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 600; color: #fff; flex-shrink: 0; }
+  .authority-name { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; color: #fff; }
+  .authority-title-text { font-size: 11px; font-weight: 300; color: rgba(240,238,255,0.45); margin-top: 2px; }
+
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 36px 0; }
+  .price-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(150,145,237,0.15); border-radius: 12px; padding: 24px 20px; text-align: center; position: relative; }
+  .price-card.featured { background: rgba(150,145,237,0.1); border: 2px solid var(--purple); }
+  .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--purple); color: var(--dark-purple); font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+  .price-tier { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--lavender); margin-bottom: 12px; }
+  .price-amount { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: #fff; line-height: 1; margin-bottom: 4px; }
+  .price-sup { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 300; vertical-align: top; margin-top: 8px; display: inline-block; color: rgba(255,255,255,0.6); }
+  .price-note { font-size: 10px; font-weight: 400; color: rgba(240,238,255,0.4); margin-top: 6px; }
+
+  .urgency-bar { background: rgba(242,172,235,0.06); border: 1px solid rgba(242,172,235,0.15); border-radius: 8px; padding: 18px 24px; margin: 24px 0; text-align: center; }
+  .urgency-bar p { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-style: italic; color: var(--pink); margin: 0; }
+
+  .faq-item { border-bottom: 1px solid rgba(150,145,237,0.12); padding: 24px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q { font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: #fff; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px; }
+  .faq-q::before { content: 'Q'; font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--purple); flex-shrink: 0; margin-top: -1px; }
+  .faq-a { font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.6); line-height: 1.75; padding-left: 26px; }
+
+  .guarantee-box { text-align: center; padding: 40px 32px; background: rgba(190,229,238,0.05); border: 1px solid rgba(190,229,238,0.12); border-radius: 12px; margin: 40px 0; }
+  .guarantee-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; font-style: italic; color: var(--blue); margin-bottom: 16px; }
+
+  .cta-section { text-align: center; padding: 60px 0 40px; }
+  .cta-btn { display: inline-block; background: var(--purple); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 18px 48px; border-radius: 4px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; margin-bottom: 16px; }
+  .cta-btn:hover { background: var(--lavender); transform: translateY(-1px); }
+  .cta-sub { font-size: 11px; font-weight: 300; color: rgba(240,238,255,0.35); letter-spacing: 0.1em; }
+
+  .wordmark { text-align: center; padding: 24px 0 0; }
+  .wordmark span { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-style: italic; color: rgba(150,145,237,0.4); letter-spacing: 0.05em; }
+
+  @media (max-width: 600px) {
+    .flow-steps { grid-template-columns: repeat(2, 1fr); }
+    .kit-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .usp-grid { grid-template-columns: 1fr; }
+    .flow-step::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">NonStephable & Co. presents</div>
+    <h1 class="hero-title">Most Business Owners<br>Don't Have an <em>Inbox Problem</em></h1>
+    <p class="hero-subtitle">They Have a Flow Problem</p>
+    <div class="hero-divider"></div>
+    <p>If you're like most solopreneurs or small business owners, your messages don't feel like a system.</p>
+    <p>They feel like something you're constantly trying to keep up with.</p>
+    <ul class="whisper-list">
+      <li>A DM here. An email there.</li>
+      <li>A follow-up you meant to send.</li>
+      <li>A message you saw but didn't get back to.</li>
+    </ul>
+    <div class="highlight-block">
+      <p>"You know people are interested. You know conversations are happening. But it still feels scattered."</p>
+    </div>
+    <ul class="whisper-list">
+      <li>Like every reply depends on your energy that day.</li>
+      <li>Like every conversation is handled slightly differently.</li>
+      <li>Like you're always one step behind.</li>
+    </ul>
+    <p style="margin-top: 24px;">So you do what most people do.</p>
+    <ul class="whisper-list">
+      <li>You reply when you can.</li>
+      <li>You scroll back when you remember.</li>
+      <li>You tell yourself you'll organize it later.</li>
+    </ul>
+    <div class="highlight-block" style="margin-top: 32px;">
+      <p>But later doesn't really come.</p>
+    </div>
+  </div>
+
+  <!-- REAL COST -->
+  <div class="section">
+    <div class="section-label">The Real Cost</div>
+    <h2 class="lead">The Real Cost Isn't Volume.<br><em>It's What Slips Through.</em></h2>
+    <p>On the surface, it doesn't look like a serious problem. You're still replying. You're still getting inquiries. You're still making some sales.</p>
+    <p>But underneath that, there's a pattern.</p>
+    <ul class="whisper-list">
+      <li>Messages that don't get followed up.</li>
+      <li>Conversations that lose momentum.</li>
+      <li>Opportunities that quietly fade.</li>
+    </ul>
+    <div class="accent-block">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: rgba(240,238,255,0.85); line-height: 1.6; margin-bottom: 12px;">Not because people weren't interested…</p>
+      <p style="font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.6); margin: 0;">But because nothing carried the conversation forward.</p>
+    </div>
+    <p>A message comes in. You plan to reply later. Later turns into tomorrow. By then, the moment has passed.</p>
+    <p style="color: rgba(240,238,255,0.5);">Multiply that across weeks… then months. And it adds up. Not because your offer isn't strong. But because the process around it isn't holding.</p>
+  </div>
+
+  <!-- PROBLEM REFRAME -->
+  <div class="section">
+    <div class="section-label">The real issue</div>
+    <h2 class="lead">The Problem Isn't What You Say.<br><em>It's What Happens Next.</em></h2>
+    <p>Most advice focuses on responses. What to say. How to say it. How to convert better.</p>
+    <div class="highlight-block">
+      <p>But better replies don't fix a scattered system. The issue isn't just the response — it's what happens after.</p>
+    </div>
+    <p>Without structure, every conversation depends on memory. You're deciding what to do… every single time.</p>
+    <p>And that's where things break.</p>
+  </div>
+
+  <!-- PRODUCT INTRO -->
+  <div class="section">
+    <div class="section-label">Introducing</div>
+    <h2 class="lead" style="text-align: center; margin-bottom: 8px;">The Inbox <em>F.L.O.W.</em> Kit</h2>
+    <p style="text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--lavender); margin-bottom: 32px;">Finally Living On Well-built Systems</p>
+    <p style="text-align: center;">A simple structure that carries every conversation forward. Instead of giving you more scripts to think about — this gives you a way to <em style="color: var(--lavender);">move</em> conversations.</p>
+    <div class="accent-block" style="text-align: center;">
+      <p style="font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.6); letter-spacing: 0.05em; margin-bottom: 16px;">So your inbox stops behaving like a list of random messages…<br>and starts behaving like a system.</p>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+        <li style="font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.75);">Every message has a place</li>
+        <li style="font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.75);">Every conversation has a direction</li>
+        <li style="font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.75);">Every inquiry moves forward</li>
+      </ul>
+    </div>
+    <div class="highlight-block">
+      <p>You're no longer reacting to what shows up. You're guiding it.</p>
+    </div>
+  </div>
+
+  <!-- USP -->
+  <div class="section">
+    <div class="section-label">What makes it different</div>
+    <h2 class="lead">This Isn't Another<br><em>Template Pack.</em></h2>
+    <p>Most inbox "solutions" hand you scripts and call it a system. But scripts without structure just add more things to remember.</p>
+    <p>The Inbox F.L.O.W. Kit is built differently — from the ground up, around flow.</p>
+    <div class="usp-grid">
+      <div class="usp-card">
+        <div class="usp-icon">∞</div>
+        <div class="usp-title">Built Around Flow</div>
+        <div class="usp-desc">Not just replies. A structure that moves conversations forward automatically.</div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-icon">◈</div>
+        <div class="usp-title">A Full System</div>
+        <div class="usp-desc">Not just scripts. Every piece works together — triage, templates, decisions, workflow.</div>
+      </div>
+      <div class="usp-card">
+        <div class="usp-icon">↳</div>
+        <div class="usp-title">Fixes Structure</div>
+        <div class="usp-desc">Not just the surface. When the structure is right, everything else gets easier.</div>
+      </div>
+    </div>
+    <div class="highlight-block">
+      <p>Templates support the system. The system is what actually works.</p>
+    </div>
+  </div>
+
+  <!-- OPEN LOOP -->
+  <div class="section">
+    <div class="section-label">Why it feels heavy</div>
+    <h2 class="lead">The <em>"Open Loop"</em> Effect</h2>
+    <p>It's not the number of messages. It's the ones that stay open.</p>
+    <ul class="whisper-list">
+      <li>A reply you haven't sent.</li>
+      <li>A follow-up you forgot.</li>
+      <li>A conversation you meant to revisit.</li>
+    </ul>
+    <p style="margin-top: 20px;">Each one sits in the background. Not urgent enough to fix immediately… but present enough that it never fully leaves your mind.</p>
+    <div class="highlight-block">
+      <p>So even when you're not in your inbox — you're still thinking about it. That's what creates the weight. Not volume. But the lack of a system that knows what to do next.</p>
+    </div>
+  </div>
+
+  <!-- WHAT CHANGES -->
+  <div class="section">
+    <div class="section-label">What changes</div>
+    <h2 class="lead">What Changes When You Have a Flow</h2>
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--lavender); margin-bottom: 28px;">Nothing dramatic happens. But something shifts.</p>
+    <p>You stop opening your inbox wondering where to start. Because you already know. Messages aren't just sitting there — they're categorized, placed, moving.</p>
+    <div class="accent-block">
+      <p style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: rgba(240,238,255,0.9); margin-bottom: 12px;">A new inquiry comes in. It has a place. A clear next step.</p>
+      <p style="font-size: 13px; font-weight: 300; color: rgba(240,238,255,0.55); margin: 0;">A lead doesn't reply? They don't disappear. They stay visible… inside a system that keeps them in motion.</p>
+    </div>
+    <div class="highlight-block" style="margin-top: 32px;">
+      <p>You're no longer carrying your inbox in your head. The system is doing that for you.</p>
+    </div>
+  </div>
+
+  <!-- FLOW SYSTEM -->
+  <div class="section">
+    <div class="section-label">The system</div>
+    <h2 class="lead" style="text-align: center; margin-bottom: 8px;">The F.L.O.W. System</h2>
+    <p style="text-align: center; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(240,238,255,0.4); margin-bottom: 40px;">The structure behind everything</p>
+    <div class="flow-steps">
+      <div class="flow-step">
+        <div class="flow-step-letter">F</div>
+        <div class="flow-step-word">Filter</div>
+        <div class="flow-step-desc">Instantly see what each message actually is</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-letter">L</div>
+        <div class="flow-step-word">Label</div>
+        <div class="flow-step-desc">Know where every conversation stands</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-letter">O</div>
+        <div class="flow-step-word">Organize</div>
+        <div class="flow-step-desc">Nothing sits — it moves</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-letter">W</div>
+        <div class="flow-step-word">Win</div>
+        <div class="flow-step-desc">Conversations don't just get answered — they get completed</div>
+      </div>
+    </div>
+    <div class="highlight-block">
+      <p>Individually, it's simple. Together, it creates something most inboxes don't have. <em style="color: var(--lavender);">Continuity.</em></p>
+    </div>
+  </div>
+
+  <!-- WHAT'S INSIDE -->
+  <div class="section">
+    <div class="section-label">What's inside</div>
+    <h2 class="lead">Everything You Need.<br><em>Nothing You Don't.</em></h2>
+    <div class="kit-grid">
+      <div class="kit-item">
+        <div class="kit-item-num">01</div>
+        <div class="kit-item-title">Message Triage Framework</div>
+        <div class="kit-item-desc">Simple inbox categorization so every message has a place</div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-item-num">02</div>
+        <div class="kit-item-title">Response Swipe File</div>
+        <div class="kit-item-desc">5 plug-and-play templates — no rewriting replies from scratch</div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-item-num">03</div>
+        <div class="kit-item-title">Automate vs. Human Decision Map</div>
+        <div class="kit-item-desc">Know exactly which messages need you and which don't</div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-item-num">04</div>
+        <div class="kit-item-title">Setup SOP</div>
+        <div class="kit-item-desc">A daily workflow so you know exactly how to move through your inbox</div>
+      </div>
+    </div>
+    <div class="bonus-strip">
+      <span class="bonus-badge">Bonus</span>
+      <span class="bonus-text">Importable GHL workflow — plug it in and go</span>
+    </div>
+    <div class="bonus-strip">
+      <span class="bonus-badge">Bonus</span>
+      <span class="bonus-text">Video walkthrough — I'll show you exactly how to set it up</span>
+    </div>
+    <p style="margin-top: 24px; color: rgba(240,238,255,0.4); font-size: 13px; text-align: center; letter-spacing: 0.05em;">No guesswork. No overthinking. Just a system you can use.</p>
+  </div>
+
+  <!-- WHY IT WORKS -->
+  <div class="section">
+    <div class="section-label">Why this works</div>
+    <h2 class="lead">It Fixes <em>Structure</em>,<br>Not Just Responses.</h2>
+    <ul class="whisper-list">
+      <li>Templates alone don't solve the problem.</li>
+      <li>Automation without structure creates confusion.</li>
+      <li>Outsourcing without a system passes the chaos.</li>
+    </ul>
+    <div class="highlight-block" style="margin-top: 32px;">
+      <p>This works because it starts with flow. Once that's clear — everything else becomes easier.</p>
+    </div>
+  </div>
+
+  <!-- AUTHORITY -->
+  <div class="section">
+    <div class="section-label">Who built this</div>
+    <h2 class="lead">Built by Someone Who <em>Actually Builds Systems</em></h2>
+    <div class="authority-card">
+      <p class="authority-text">I didn't finish my architecture degree. But it turns out I was always meant to be an Architect — just not the kind that draws buildings.<br><br>I build automation systems for small business owners who are tired of running on memory and good intentions. The Inbox F.L.O.W. Kit started as something I built for a friend whose customer support was completely broken — messages falling through the cracks, leads going cold, no structure holding any of it together.<br><br>I saw the same pattern everywhere. Not a volume problem. A flow problem. So I packaged the fix.</p>
+      <div class="authority-byline">
+        <div class="authority-avatar">S</div>
+        <div>
+          <div class="authority-name">Stephie</div>
+          <div class="authority-title-text">Automation Architect · Founder, NonStephable & Co.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <div class="section">
+    <div class="section-label">Investment</div>
+    <h2 class="lead" style="text-align: center; margin-bottom: 12px;">What This Is Worth</h2>
+    <p style="text-align: center; font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--lavender); margin-bottom: 12px;">When nothing slips through</p>
+    <p style="text-align: center; margin-bottom: 40px;">If you hired someone to fix this, it wouldn't be small. But what you actually need isn't complexity. It's structure. So instead of pricing this like a service — it's priced for implementation.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amount"><span class="price-sup">$</span>9</div>
+        <div class="price-note">one time</div>
+      </div>
+      <div class="price-card featured">
+        <div class="popular-badge">Most Popular</div>
+        <div class="price-tier">Full Kit</div>
+        <div class="price-amount"><span class="price-sup">$</span>27</div>
+        <div class="price-note">one time</div>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Done-With-You</div>
+        <div class="price-amount"><span class="price-sup">$</span>47</div>
+        <div class="price-note">one time</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOR YOU IF -->
+  <div class="section">
+    <div class="section-label">This is for you</div>
+    <h2 class="lead">This Is for You If You Want Things<br>to Feel <em>Lighter.</em></h2>
+    <p style="margin-bottom: 24px;">Not more complicated. This isn't for someone looking for hacks. It's for the person who feels the friction every time they open their inbox.</p>
+    <div class="accent-block">
+      <p style="font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(240,238,255,0.5); margin-bottom: 16px;">If you want:</p>
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px;">
+        <li style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: rgba(240,238,255,0.85);">Clarity without rigidity</li>
+        <li style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: rgba(240,238,255,0.85);">Structure without overwhelm</li>
+        <li style="font-family: 'Cormorant Garamond', serif; font-size: 20px; font-style: italic; color: rgba(240,238,255,0.85);">Consistency without constant effort</li>
+      </ul>
+      <p style="margin-top: 20px; font-size: 13px; font-weight: 300; color: var(--lavender);">This will feel different.</p>
+    </div>
+  </div>
+
+  <!-- GUARANTEE -->
+  <div class="guarantee-box">
+    <div class="guarantee-title">A Simple Guarantee</div>
+    <p style="max-width: 440px; margin: 0 auto;">If this doesn't make your inbox feel clearer — if things still feel just as scattered after setup — you don't keep it. You get your $27 back.</p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-label">Frequently Asked Questions</div>
+    <h2 class="lead" style="margin-bottom: 32px;">Still Have <em>Questions?</em></h2>
+    <div class="faq-item">
+      <div class="faq-q">Is this just templates?</div>
+      <div class="faq-a">No. Templates are included, but this is built around a flow. The templates support the system — they don't replace it.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Will this work if I'm using multiple platforms?</div>
+      <div class="faq-a">Yes. The structure is designed to work regardless of where your messages come from.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What if I don't get a lot of messages yet?</div>
+      <div class="faq-a">That's actually the best time to set this up. It's easier to build structure early than to fix chaos later.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Is this complicated to implement?</div>
+      <div class="faq-a">No. It's meant to be simple enough to set up quickly and flexible enough to fit how you already work.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need any specific tools?</div>
+      <div class="faq-a">No. You can apply this using tools you already have.</div>
+    </div>
+  </div>
+
+  <!-- CLOSING -->
+  <div class="section">
+    <div class="section-label">The only real risk</div>
+    <h2 class="lead" style="text-align: center;">Is Staying in the<br><em>Same Loop.</em></h2>
+    <div style="text-align: center; margin: 32px 0;">
+      <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
+        <li style="font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.5);">You can keep replying when you can.</li>
+        <li style="font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.5);">Remembering what you can.</li>
+        <li style="font-size: 14px; font-weight: 300; color: rgba(240,238,255,0.5);">Hoping nothing important slips.</li>
+      </ul>
+    </div>
+    <div class="highlight-block" style="text-align: center; border-left: none; border: 1px solid rgba(150,145,237,0.25); border-radius: 8px;">
+      <p>Or you can change how this part of your business works. Not by doing more — but by finally giving it structure.</p>
+    </div>
+    <div class="urgency-bar" style="margin-top: 32px;">
+      <p>Every day without a system is another day something slips through. The structure is ready — you just have to use it.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <h2 class="lead" style="margin-bottom: 8px;">Get The Inbox <em>F.L.O.W.</em> Kit</h2>
+    <p style="font-family: 'Cormorant Garamond', serif; font-size: 16px; font-style: italic; color: var(--lavender); margin-bottom: 36px;">And let your inbox start supporting you.</p>
+    <br>
+    <a href="#" class="cta-btn">Get Instant Access</a>
+    <br><br>
+    <p class="cta-sub">One-time payment · Instant delivery · 100% refund guarantee</p>
+  </div>
+
+  <div class="wordmark">
+    <span>NonStephable & Co. — Automation Architecture for the Way You Actually Work</span>
+  </div>
+
+</div>
+</body>
+</html>
